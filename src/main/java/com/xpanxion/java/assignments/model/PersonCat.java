@@ -62,10 +62,13 @@ public class PersonCat {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof PersonCat)) return false;
+        if (this == o)
+            return true;
+        if (!(o instanceof PersonCat))
+            return false;
         PersonCat personCat = (PersonCat) o;
-        return getId() == personCat.getId() && getFirstName().equals(personCat.getFirstName()) && getCatList().equals(personCat.getCatList());
+        return getId() == personCat.getId() && getFirstName().equals(personCat.getFirstName())
+                && getCatList().equals(personCat.getCatList());
     }
 
     @Override

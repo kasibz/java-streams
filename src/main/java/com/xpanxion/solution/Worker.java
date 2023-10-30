@@ -7,9 +7,11 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import java.util.HashMap;
 import java.util.TreeMap;
+import java.util.ArrayList;
 
 import com.xpanxion.java.assignments.DataAccess;
 import com.xpanxion.java.assignments.model.Department;
+import com.xpanxion.java.assignments.model.*;
 
 public class Worker {
     private int id;
@@ -120,6 +122,46 @@ public class Worker {
             System.out.printf("%s = %d\n", key, value);
 
         });
+    }
 
+    public void ex8() {
+        var newPeopleList = DataAccess.getPeople().stream()
+                .map(person -> {
+                    person.setSsn("null");
+                    person.setAge(0);
+                    person.setLastName("null");
+                    return person;
+
+                })
+                .collect(Collectors.toList());
+
+        System.out.println(newPeopleList);
+    }
+
+    public void ex9() {
+        // get list of all products and add 2dollars then return sum of everything
+        float[] sum = { 0.0F };
+        DataAccess.getProducts().stream()
+                .forEach(item -> {
+                    if (item.getDepartmentId() == 1)
+                        sum[0] += item.getPrice() + 2;
+                });
+        System.out.printf("$%.2f", sum[0]);
+    }
+
+    public void ex10() {
+        // return a list of PersonCat Objects. Meaning CAt and Person have same Id
+        // but when you find that cat,
+        var personCatList = new ArrayList<PersonCat>();
+        var personList = DataAccess.getPeople();
+        var catList = DataAccess.getCats();
+        for (int i = 0; i < personList.size(); i++) {
+            if (personList.get(i).getId() == catList.get(i).getId()) {
+                ArrayList<Cat> tempCat = new ArrayList<>(Arrays.asList(catList.get(i)));
+                PersonCat tempPersonCat = new PersonCat(i + 1, personList.get(i).getFirstName(), tempCat);
+                personCatList.add(tempPersonCat);
+            }
+        }
+        System.out.println(personCatList);
     }
 }
